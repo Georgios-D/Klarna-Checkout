@@ -30,4 +30,8 @@ app.get("/p/:id", async (req, res) => {
   res.send(product);
 });
 
+app.get("/confirmation", (req, res) => {
+  res.send(req.query.order_id);
+});
+
 app.listen(3000);
