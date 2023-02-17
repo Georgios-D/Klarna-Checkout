@@ -6,7 +6,7 @@ const app = express();
 console.log(process.env.PUBLIC_KEY);
 
 process.env;
-import { createOrder } from "./klarna.js";
+import { createOrder, retrieveOrder } from "./klarna.js";
 
 const products = [
   { id: "1", name: "Chair", price: 1000 },
@@ -26,12 +26,11 @@ app.get("/p/:id", async (req, res) => {
   const data = await createOrder(product);
   res.send(data.html_snippet);
   await createOrder(product);
-
-  res.send(product);
 });
 
-app.get("/confirmation", (req, res) => {
-  res.send(req.query.order_id);
+app.get("/confirmation", async (req, res) => {
+  const data = await retrieveOrder(req.query.order_id);
+  res.send(data.html_snippet);
 });
 
 app.listen(3000);
